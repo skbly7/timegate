@@ -198,11 +198,11 @@ class TimeGate(object):
         :return: The retrieved value.
         """
         mementos = None
-        if self.cache and request.cache_control != 'no-cache':
+        if hasattr(self, 'cache') and request.cache_control != 'no-cache':
             mementos = self.cache.get_all(uri_r)
         if mementos is None:
             mementos = parsed_request(self.handler.get_all_mementos, uri_r)
-            if self.cache:
+            if hasattr(self, 'cache'):
                 self.cache.set(uri_r, mementos)
         return mementos
 
